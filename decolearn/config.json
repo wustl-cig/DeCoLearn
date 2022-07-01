@@ -1,0 +1,87 @@
+{
+        "setting": {
+                "root_path": "./experimental_results/",
+                "save_folder": "tmp_Demo_DeCoLearn",
+                "gpu_index": "1",
+                "mode": "train",
+                "method": "DeCoLearn"
+        },
+
+        "dataset": {
+                "synthetic": {
+                        "sigma": 18,
+
+                        "P": 1966,
+                        "theta": 10,
+                        "translation": [0, 0],
+                        "rotate": 0,
+                        "scale": 0
+                },
+
+                "root_path": "./dataset/",
+                "mask_type": "cartesian",
+                "mask_fold": 3,
+                "input_snr": 40
+        },
+
+        "method": {
+                "lambda_": 6,
+                "loss_regis_mse": 0,
+                "loss_regis_dice": 0,
+                "loss_regis_ncc": 1,
+
+                "loss_recon_consensus": 0.2,
+
+                "proposed": {
+                        "regis_batch": 1,
+                        "recon_batch": 1,
+
+                        "is_optimize_regis": false
+                }
+        },
+
+        "module": {
+                "regis": {
+                         "nf_enc": [16, 32, 32, 32],
+                         "nf_dec": [32, 32, 32, 32, 32, 16, 16]
+
+                },
+
+                "recon": {
+                        "recon_net": "EDSR",
+
+                        "EDSR": {
+                                "n_resblocks": 13,
+                                "n_feats": 64,
+                                "res_scale": 1
+                        }
+
+                }
+        },
+
+        "train": {
+                "batch_size": 1,
+
+                "num_workers": 4,
+                "verbose_batch": 10,
+                "train_epoch": 100,
+                "checkpoint_epoch": 10,
+                "tensorboard_batch": 50,
+
+                "recon_lr": 5e-4,
+                "regis_lr": 5e-4,
+
+                "recon_loss": "smooth_l1",
+                "regis_loss": null
+
+        },
+
+        "test": {
+                "recon_checkpoint": "recon_model/best_valid_psnr.pt",
+                "regis_checkpoint": "regis_model/best_valid_psnr.pt",
+
+                "is_save_mat": false,
+                "desc": ""
+
+        }
+}
